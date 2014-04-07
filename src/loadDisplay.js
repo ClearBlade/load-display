@@ -82,9 +82,7 @@ angular.module('loadDisplay', [])
     var parent = temp.parent();
     var foundLoading = false;
     while(parent.length > 0) {
-      console.log(parent.children(".show-background"));
       if(parent.children(".show-background").length > 0) {
-        console.log("FOUND ONE!");
         foundLoading = true;
         break;
       }
