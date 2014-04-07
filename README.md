@@ -8,7 +8,7 @@ Use this service to grey out your web page and display a loading icon and messag
 * The test were created with [Jasmine](http://jasmine.github.io/) v2.0, and are ran with [Karma Runner](http://karma-runner.github.io/0.12/index.html).  They also make use of the [angular-mocks](https://github.com/angular/angular.js/tree/master/src/ngMock) service.
 
 ## To Use
-The service provides one function, `addDisplay`.  This function takes an AngularJs promise, a message string, and an optional ID string.  It will then display a loading icon until the given promise is resolved or rejected.  If an ID is given then only the element with that ID will be greyed out.  If no ID is given then the entire page will be greyed out.
+The service provides one function, `addDisplay`.  This function takes an AngularJs promise, a message string, and an optional ID string.  It will then display a loading icon until the given promise is resolved or rejected.  If an ID is given then only the html element with that ID will be greyed out.  If no ID is given then the entire page will be greyed out.
 
 Look in `demo.html` and `demo/app.js` for an example.
 
