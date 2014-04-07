@@ -12,5 +12,5 @@ The service provides one function, `addDisplay`.  This function takes an Angular
 
 Look in `demo.html` and `demo/app.js` for an example.
 
-## To run test
+## To Run Test
 In the root folder just run `karma start` to run the test.
