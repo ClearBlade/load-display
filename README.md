@@ -12,5 +12,9 @@ The service provides one function, `addDisplay`.  This function takes an Angular
 
 Look in `demo.html` and `demo/app.js` for an example.
 
-## To Run Test
+## To Run Test And Demo
+First create a `lib/` directory at the root of the folder.  Add `jquery-1.10.1.min.js` and `angular.min.js` to this lib directory. If you don't want to use that version of jQuery or some other form of Angular JS then just change the script elements in the `<head>` of demo.html.
+
 In the root folder just run `karma start` to run the test.
+
+You can open demo.html in your web browser. I have tested against Mozilla and Chrome.
