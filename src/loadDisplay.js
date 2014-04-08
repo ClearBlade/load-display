@@ -63,7 +63,7 @@ angular.module('loadDisplay', [])
       var template = _Promises[topId].template;
 
       //hide any loading dialogs being displayed in the children
-      var displayed = template.parent().find(".show-background");
+      var displayed = template.parent()[0].querySelectorAll(".show-background");
       if(displayed.length > 0) {
         hideDisplay(displayed);
       }
@@ -95,8 +95,8 @@ angular.module('loadDisplay', [])
   }
 
   function hideDisplay(template) {
-    template.removeClass("show-background");
-    template.addClass("hide-background");
+    angular.element(template).removeClass("show-background");
+    angular.element(template).addClass("hide-background");
   }
 
   self.getActiveMsg = function() {
