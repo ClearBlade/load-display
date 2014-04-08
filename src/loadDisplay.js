@@ -79,11 +79,14 @@ angular.module('loadDisplay', [])
   }
 
   function ancestorHasLoading(temp) {
-    var parent = temp.parent();
+    var parent = temp.parent()[0];
     var foundLoading = false;
-    while(parent.length > 0) {
-      if(parent[0].querySelectorAll('.show-background').length > 0) {
+    for (i = 0; i < parent.children.length; i++) {
+      if(angular.element(parent.children[i]).hasClass('show-background')) {
         foundLoading = true;
+        break;
+      }
+      if (parent.tagName === 'BODY') {
         break;
       }
       parent = parent.parent();
