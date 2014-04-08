@@ -23,7 +23,7 @@ angular.module('loadDisplay', [])
     if(id == undefined) {
       $rootElement.append(myClone);
     } else {
-      var parent = $rootElement.find("#"+id);
+      var parent = angular.element(document.getElementById(id));
       parent.append(myClone);
     }
     var asyncDefer = $q.defer();
@@ -67,7 +67,7 @@ angular.module('loadDisplay', [])
       if(displayed.length > 0) {
         hideDisplay(displayed);
       }
-      if(!window.jQuery || !ancestorHasLoading(template.parent())) {
+      if(!ancestorHasLoading(template.parent())) {
         self.msg = msg;
         template.find('span').text(msg);
         template.addClass("show-background");
@@ -82,7 +82,7 @@ angular.module('loadDisplay', [])
     var parent = temp.parent();
     var foundLoading = false;
     while(parent.length > 0) {
-      if(parent.children(".show-background").length > 0) {
+      if(parent[0].querySelectorAll('.show-background').length > 0) {
         foundLoading = true;
         break;
       }
