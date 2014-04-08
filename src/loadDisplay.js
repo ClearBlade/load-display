@@ -13,7 +13,6 @@ angular.module('loadDisplay', [])
     return template;
   }
 
-  self.msg = "";
   var counter = 0;
   var _Promises = {};
   var _PromiseStack = [];
@@ -48,7 +47,7 @@ angular.module('loadDisplay', [])
   }
 
   function removeDisplay(id) {
-    hideDisplay(_Promises[id].template);
+    _Promises[id].template.remove()
     delete _Promises[id];
     var index = _PromiseStack.indexOf(id);
     _PromiseStack.splice(index, 1);
@@ -56,25 +55,22 @@ angular.module('loadDisplay', [])
   }
 
   function displayTop() {
-    if(_PromiseStack.length > 0) {
-      var lastIndex = _PromiseStack.length - 1;
+    for(var i = 0; i < _PromiseStack.length; i++) {
+      var lastIndex = i;
       var topId = _PromiseStack[lastIndex];
       var msg = _Promises[topId].msg;
       var template = _Promises[topId].template;
 
       //hide any loading dialogs being displayed in the children
-      var displayed = template.parent().find(".show-background");
+      var displayed = angular.element(template.parent()).find(".show-background");
       if(displayed.length > 0) {
         hideDisplay(displayed);
       }
       if(!window.jQuery || !ancestorHasLoading(template.parent())) {
-        self.msg = msg;
         template.find('span').text(msg);
         template.addClass("show-background");
         template.removeClass("hide-background");
       }
-    } else {
-      self.msg = "";
     }
   }
 
@@ -95,10 +91,6 @@ angular.module('loadDisplay', [])
     template.removeClass("show-background");
     template.addClass("hide-background");
   }
-
-  self.getActiveMsg = function() {
-    return self.msg;
-  };
 }]);
 
 angular.module('loadDisplay').value('loadTemplate',
