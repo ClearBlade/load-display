@@ -22,7 +22,7 @@ angular.module('loadDisplay', [])
     if(id == undefined) {
       $rootElement.append(myClone);
     } else {
-      var parent = $rootElement.find("#"+id);
+      var parent = angular.element(document.getElementById(id));
       parent.append(myClone);
     }
     var asyncDefer = $q.defer();
@@ -47,6 +47,7 @@ angular.module('loadDisplay', [])
   }
 
   function removeDisplay(id) {
+    _Promises[id].template.parent().removeClass("has-background");
     _Promises[id].template.remove()
     delete _Promises[id];
     var index = _PromiseStack.indexOf(id);
@@ -62,39 +63,45 @@ angular.module('loadDisplay', [])
       var template = _Promises[topId].template;
 
       //hide any loading dialogs being displayed in the children
-      var displayed = angular.element(template.parent()).find(".show-background");
-      if(displayed.length > 0) {
-        hideDisplay(displayed);
+      if (template.parent().length > 0) {
+        var displayed = template.parent()[0].querySelectorAll(".show-background");
+        if(displayed.length > 0) {
+          hideDisplay(displayed);
+        }
       }
-      if(!window.jQuery || !ancestorHasLoading(template.parent())) {
+      var load = ancestorHasLoading(template);
+      if(!load) {
         template.find('span').text(msg);
         template.addClass("show-background");
         template.removeClass("hide-background");
+        template.parent().addClass("has-background");
       }
     }
   }
 
   function ancestorHasLoading(temp) {
-    var parent = temp.parent();
-    var foundLoading = false;
-    while(parent.length > 0) {
-      if(parent.children(".show-background").length > 0) {
-        foundLoading = true;
-        break;
-      }
-      parent = parent.parent();
-    }
-    return foundLoading;
+var e = temp[0];
+while (e.parentElement) {
+  if (e.parentElement.classList.contains('has-background')) {
+    return true;
+  }
+  e = e.parentElement;
+}
   }
 
   function hideDisplay(template) {
-    template.removeClass("show-background");
-    template.addClass("hide-background");
+    for (var i = 0; i < template.length; i++) {
+      template[i].parentElement.classList.remove("has-background");
+      template[i].classList.remove("show-background")
+      template[i].classList.add("hide-background");
+    }
+
   }
+
 }]);
 
 angular.module('loadDisplay').value('loadTemplate',
-  "<div id='load-background' class='hide-background'>" +
+  "<div class='loading-background hide-background'>" +
     "<div class='loading-display'>"+
       "<img src='img/ajax-loader.gif' height='46' width='46'><br><span>Loading</span></div>"+
     "</div>"+
